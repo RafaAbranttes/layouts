@@ -5,8 +5,9 @@ import 'package:layout1/store/store.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-  
+  HomePage({Key? key}) : super(key: key);
+  final themeController = GetIt.I<ThemeStore>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +16,10 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () async {
-            if(await Storage.getTheme as bool){
-              Provider.of<ThemeStore>(context, listen: false).setTheme(false);
+            if (await Storage.getTheme as bool) {
+              themeController.setIsDarkTheme = false;
             } else {
-              Provider.of<ThemeStore>(context, listen: false).setTheme(true);
+              themeController.setIsDarkTheme = true;
             }
           },
           child: const Text("Ola"),

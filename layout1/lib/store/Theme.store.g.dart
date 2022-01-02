@@ -9,50 +9,33 @@ part of 'Theme.store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ThemeStore on _ThemeStoreBase, Store {
-  final _$_themeAtom = Atom(name: '_ThemeStoreBase._theme');
+  Computed<bool>? _$getIsDarkThemeComputed;
 
   @override
-  ThemeMode get _theme {
-    _$_themeAtom.reportRead();
-    return super._theme;
+  bool get getIsDarkTheme =>
+      (_$getIsDarkThemeComputed ??= Computed<bool>(() => super.getIsDarkTheme,
+              name: '_ThemeStoreBase.getIsDarkTheme'))
+          .value;
+
+  final _$_isDarkThemeAtom = Atom(name: '_ThemeStoreBase._isDarkTheme');
+
+  @override
+  bool get _isDarkTheme {
+    _$_isDarkThemeAtom.reportRead();
+    return super._isDarkTheme;
   }
 
   @override
-  set _theme(ThemeMode value) {
-    _$_themeAtom.reportWrite(value, super._theme, () {
-      super._theme = value;
+  set _isDarkTheme(bool value) {
+    _$_isDarkThemeAtom.reportWrite(value, super._isDarkTheme, () {
+      super._isDarkTheme = value;
     });
-  }
-
-  final _$_ThemeStoreBaseActionController =
-      ActionController(name: '_ThemeStoreBase');
-
-  @override
-  ThemeMode getTheme() {
-    final _$actionInfo = _$_ThemeStoreBaseActionController.startAction(
-        name: '_ThemeStoreBase.getTheme');
-    try {
-      return super.getTheme();
-    } finally {
-      _$_ThemeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setTheme(bool isDarkTheme) {
-    final _$actionInfo = _$_ThemeStoreBaseActionController.startAction(
-        name: '_ThemeStoreBase.setTheme');
-    try {
-      return super.setTheme(isDarkTheme);
-    } finally {
-      _$_ThemeStoreBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override
   String toString() {
     return '''
-
+getIsDarkTheme: ${getIsDarkTheme}
     ''';
   }
 }

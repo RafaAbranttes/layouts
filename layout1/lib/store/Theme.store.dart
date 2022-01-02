@@ -8,20 +8,14 @@ class ThemeStore = _ThemeStoreBase with _$ThemeStore;
 
 abstract class _ThemeStoreBase with Store {
   @observable
-  ThemeMode _theme = ThemeMode.light;
+  bool _isDarkTheme = false;
 
-  @action
-  ThemeMode getTheme() => _theme;
+  @computed
+  bool get getIsDarkTheme => _isDarkTheme;
 
-  @action
-  void setTheme(bool isDarkTheme) {
-    if (isDarkTheme) {
-      Storage.saveTheme(true);
-      _theme = ThemeMode.dark;
-    } else {
-      Storage.saveTheme(false);
-      _theme = ThemeMode.light;
-    }
+  @computed
+  set setIsDarkTheme(bool isDarkTheme) {
+    Storage.saveTheme(isDarkTheme);
+    _isDarkTheme = isDarkTheme;
   }
-
 }

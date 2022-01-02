@@ -13,34 +13,23 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupService();
   final themeController = GetIt.I<ThemeStore>();
-  themeController.setTheme(await Storage.getTheme as bool);
+  themeController.setIsDarkTheme = await Storage.getTheme as bool;
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  MyApp({Key? key}) : super(key: key);
+  final themeController = GetIt.I<ThemeStore>();
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeStore>(context);
-    return MultiProvider(
-      providers: [
-        Provider<ThemeStore>(
-          create: (_) => ThemeStore(),
-        ),
-      ],
-      child: Consumer<ThemeStore>(builder: (context, value, _) {
-        return Observer(builder: (_) {
-          return MaterialApp(
-            title: 'Layout 1',
-            theme: Themes().lightTheme,
-            themeMode: value.getTheme(),
-            darkTheme: Themes().darkTheme,
-            home: HomePage(),
-          );
-        });
-      }),
-    );
+    return Observer(builder: (_) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Layout 1',
+        theme: themeController.getIsDarkTheme ? Themes().darkTheme : Themes().lightTheme,
+        home: HomePage(),
+      );
+    });
   }
 }
